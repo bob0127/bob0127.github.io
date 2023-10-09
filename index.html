@@ -22,7 +22,7 @@
             <br>
             <button onclick="calculate()">計算</button>
             <p class="red-text" id="result">結果： </p>
-            <p> "我才剛學一點塔羅牌" </p>
+            <p> 我才剛學一點塔羅牌 <br> 所以只能產生名稱 不太會解釋 </p>
         </form>
     </body>
 </html>
@@ -55,17 +55,18 @@
         else second += num2;
         if(num3>9)second +=Math.floor(num3/10+num3%10);
         else second += num3;
+        second=Math.floor(second%22);
         
-        
-        var myArray = ["魔術師","女祭司","皇后","國王","教皇","戀人","戰車","力量","隱者","命運之輪","正義","吊人",
-"死神","節制","惡魔","塔","星星","月亮","太陽","審判","世界","愚者"];
+        var myArray = ["愚者","魔術師","女祭司","皇后","國王","教皇","戀人","戰車","力量","隱者","命運之輪","正義","吊人",
+"死神","節制","惡魔","塔","星星","月亮","太陽","審判","世界"];
         // 將結果顯示在頁面上
         var list = [0,31,59,90,120,151,181,212,243,273,304,334];
         var forth = Math.floor((list[num2-1]+num3)%22);
         var fifth = Math.floor((forth+21)%22);
         var sixth = Math.floor((forth+1)%22);
-        document.getElementById('result').innerText = '結果：\n'+myArray[first]+first+"\n"+myArray[second]+second+"\n"+myArray[third]+third+"\n"+
-        myArray[forth]+forth+"\n"+myArray[fifth]+fifth+"\n"+myArray[sixth]+sixth;
+        var seventh = num1+num2+num3;
+        document.getElementById('result').innerText = '結果：\n'+"先天:\n"+myArray[first]+first+"\n"+myArray[second]+second+"\n"+myArray[third]+third+"\n"+
+        "後天:\n"+myArray[forth]+forth+"\n"+myArray[fifth]+fifth+"\n"+myArray[sixth]+sixth;
     }   
 
 </script>
