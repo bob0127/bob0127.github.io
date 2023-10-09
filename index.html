@@ -5,10 +5,6 @@
     </head>
     <body>
         <style>
-            .red-text {
-              color: red;
-            }
-          
             p {
               font-size: 16px;
             }
@@ -21,7 +17,8 @@
             <input type="text" id = "day" placeholder="輸入出生日" required>
             <br>
             <button onclick="calculate()">計算</button>
-            <p class="red-text" id="result">結果： </p>
+            <p id="result">結果： </p>
+            <p id="loyear"></p>
             <p> 我才剛學一點塔羅牌 <br> 所以只能產生名稱 不太會解釋 </p>
         </form>
     </body>
@@ -65,8 +62,21 @@
         var fifth = Math.floor((forth+21)%22);
         var sixth = Math.floor((forth+1)%22);
         var seventh = num1+num2+num3;
-        document.getElementById('result').innerText = '結果：\n'+"先天:\n"+myArray[first]+first+"\n"+myArray[second]+second+"\n"+myArray[third]+third+"\n"+
-        "後天:\n"+myArray[forth]+forth+"\n"+myArray[fifth]+fifth+"\n"+myArray[sixth]+sixth;
+        var seventh_1 = Math.floor((seventh+1)%22);
+        var currentDate = new Date();
+        var currentYear = currentDate.getFullYear();
+        seventh = Math.floor(seventh/1000+seventh/10+seventh%10);
+
+        document.getElementById('result').innerHTML = "<span style='color: black;'>結果:</span><br>天賦1: " +
+            "<span style='color: red;'>"+myArray[first] + first + "</span>"+"<br>天賦2: " +
+            "<span style='color: red;'>"+myArray[second] + second + "</span>"+"<br>天賦3: " +
+            "<span style='color: red;'>"+myArray[third] + third + "</span>"+"<br>天賦4: " +
+            "<span style='color: red;'>"+myArray[forth] + forth + "</span>"+"<br>天賦5: " +
+            "<span style='color: red;'>"+myArray[fifth] + fifth + "</span>"+"<br>天賦6: " +
+            "<span style='color: red;'>"+myArray[sixth] + sixth + "</span>"+"<br>流年數: <br>" +
+            (currentYear-1)+"/"+num2+"/"+num3+"~"+currentYear+"/"+num2+"/"+(num3-1)+"  "+"<span style='color: red;'>"+myArray[seventh] + seventh + "</span>" + "<br>" + 
+            currentYear+"/"+num2+"/"+num3+"~"+(currentYear+1)+"/"+num2+"/"+(num3-1)+"  "+"<span style='color: red;'>"+myArray[seventh_1] + seventh_1 + "</span>";
+            
     }   
 
 </script>
