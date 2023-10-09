@@ -1,17 +1,34 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <style>
-        body {
-            background-image: url('https://farm2.staticflickr.com/1859/30277527828_67cf649d56_k.jpg');
-            background-size: cover;
-            color: white; 
-            display: flex;
-            justify-content: center;
-            align-items: center;
-          }
-        </style>
         <title>塔羅牌</title>
+        <style>
+            body {
+              background-image: url('https://farm2.staticflickr.com/1859/30277527828_67cf649d56_k.jpg');
+              background-size: cover;
+              color: white; 
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            }
+            .container {
+                display: flex;
+                flex-direction: column; 
+                justify-content: center;
+                align-items: center;
+            }
+            .container_row {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+
+            }
+            .side-image {
+                
+                margin: 0 10px; 
+            }
+        </style>
     </head>
     <body>
         <style>
@@ -19,18 +36,33 @@
               font-size: 16px;
             }
         </style>
-        <form onsubmit="event.preventDefault();">
-            <input type="text" id="year" placeholder="輸入出生年" required>
-            <br>
-            <input type="text" id = "month" placeholder="輸入出生月" required>
-            <br>
-            <input type="text" id = "day" placeholder="輸入出生日" required>
-            <br>
-            <button onclick="calculate()">計算</button>
-            <p id="result">結果： </p>
-            <p id="loyear"></p>
-            <p> 我才剛學一點塔羅牌 <br> 所以只能產生名稱 不太會解釋 </p>
-        </form>
+        <div class="container">
+            <h1>大家好</h1>
+            <p>平常的我喜歡玩遊戲，例如Minecraft, League of Legend, GTAV, Valorant</p>
+            <div class="container_row">
+                <div class="side-image">
+                    <img src="https://upload.wikimedia.org/wikipedia/zh/thumb/d/d0/JaketheDog.png/220px-JaketheDog.png" alt="Side Image">
+                </div>
+                <form onsubmit="event.preventDefault();">
+                    
+                    <input type="text" id="year" placeholder="輸入出生年" required>
+                    <br>
+                    <input type="text" id = "month" placeholder="輸入出生月" required>
+                    <br>
+                    <input type="text" id = "day" placeholder="輸入出生日" required>
+                    <br>
+                    <button onclick="calculate()">計算</button>
+                    <p id="result">結果： </p>
+                    <p id="loyear"></p>
+                    <p> 我才剛學一點塔羅牌 <br> 所以只能產生名稱 不太會解釋 </p>
+                </form>
+                
+                <div class="side-image">
+                    <img src="https://upload.wikimedia.org/wikipedia/zh/e/e5/FinnAdventureTime.png" alt="Side Image">
+                </div>
+            </div>
+        </div>
+        
     </body>
 </html>
 
@@ -78,14 +110,14 @@
         seventh = Math.floor(seventh/1000+seventh/10+seventh%10);
 
         document.getElementById('result').innerHTML = "<span style='color: black;'>結果:</span><br>天賦1: " +
-            "<span style='color: red;'>"+myArray[first] + first + "</span>"+"<br>天賦2: " +
-            "<span style='color: red;'>"+myArray[second] + second + "</span>"+"<br>天賦3: " +
-            "<span style='color: red;'>"+myArray[third] + third + "</span>"+"<br>天賦4: " +
-            "<span style='color: red;'>"+myArray[forth] + forth + "</span>"+"<br>天賦5: " +
-            "<span style='color: red;'>"+myArray[fifth] + fifth + "</span>"+"<br>天賦6: " +
-            "<span style='color: red;'>"+myArray[sixth] + sixth + "</span>"+"<br>流年數: <br>" +
-            (currentYear-1)+"/"+num2+"/"+num3+"~"+currentYear+"/"+num2+"/"+(num3-1)+"  "+"<span style='color: red;'>"+myArray[seventh] + seventh + "</span>" + "<br>" + 
-            currentYear+"/"+num2+"/"+num3+"~"+(currentYear+1)+"/"+num2+"/"+(num3-1)+"  "+"<span style='color: red;'>"+myArray[seventh_1] + seventh_1 + "</span>";
+            "<span style='color: yellow;'>"+myArray[first] + first + "</span>"+"<br>天賦2: " +
+            "<span style='color: yellow;'>"+myArray[second] + second + "</span>"+"<br>天賦3: " +
+            "<span style='color: yellow;'>"+myArray[third] + third + "</span>"+"<br>天賦4: " +
+            "<span style='color: yellow;'>"+myArray[forth] + forth + "</span>"+"<br>天賦5: " +
+            "<span style='color: yellow;'>"+myArray[fifth] + fifth + "</span>"+"<br>天賦6: " +
+            "<span style='color: yellow;'>"+myArray[sixth] + sixth + "</span>"+"<br>流年數: <br>" +
+            (currentYear-1)+"/"+num2+"/"+num3+"~"+currentYear+"/"+num2+"/"+(num3-1)+"  "+"<span style='color: yellow;'>"+myArray[seventh] + seventh + "</span>" + "<br>" + 
+            currentYear+"/"+num2+"/"+num3+"~"+(currentYear+1)+"/"+num2+"/"+(num3-1)+"  "+"<span style='color: yellow;'>"+myArray[seventh_1] + seventh_1 + "</span>";
             
     }   
 
