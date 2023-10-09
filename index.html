@@ -5,7 +5,6 @@
         <style>
             body {
               background-image: url('https://farm2.staticflickr.com/1859/30277527828_67cf649d56_k.jpg');
-              background-size: cover;
               color: white; 
               display: flex;
               justify-content: center;
@@ -44,6 +43,7 @@
             <h1>大家好</h1>
             <p >平常的我喜歡玩遊戲, 例如Minecraft, League of Legend, GTAV, Valorant</p><br>
             <p class="dc">我的Discord:bob0127</p>
+            <a href="https://www.instagram.com/bobbob930127/" target="_blank" style="color:aqua">我的Instagram</a>
             <div class="container_row">
                 <div class="side-image">
                     <img src="https://upload.wikimedia.org/wikipedia/zh/thumb/d/d0/JaketheDog.png/220px-JaketheDog.png" alt="Side Image">
@@ -117,7 +117,8 @@
         var seventh = num1+num2+num3;
         var seventh_1 = Math.floor((seventh+1)%22);
         seventh = Math.floor(seventh/1000+seventh/10+seventh%10);
-        document.getElementById('result').innerHTML = "<span style='color: AQUA;'>結果:</span><br>天賦1: " +
+        
+            document.getElementById('result').innerHTML = "<span style='color: AQUA;'>結果:</span><br>天賦1: " +
                 "<span style='color: yellow;'>"+myArray[first] + first + "</span>"+"<br>天賦2: " +
                 "<span style='color: yellow;'>"+myArray[second] + second + "</span>"+"<br>天賦3: " +
                 "<span style='color: yellow;'>"+myArray[third] + third + "</span>"+"<br>天賦4: " +
