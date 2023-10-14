@@ -114,9 +114,14 @@
         var forth = Math.floor((list[num2-1]+num3)%22);
         var fifth = Math.floor((forth+21)%22);
         var sixth = Math.floor((forth+1)%22);
-        var seventh = num1+num2+num3;
+        var seventh = 0;
+        var temp = currentYear-1+num2+num3;
+        while(temp>0){
+            seventh+=Math.floor(temp%10);
+            temp/=10;
+        }
+        seventh = Math.floor(seventh%22);
         var seventh_1 = Math.floor((seventh+1)%22);
-        seventh = Math.floor(seventh/1000+seventh/10+seventh%10);
         
             document.getElementById('result').innerHTML = "<span style='color: AQUA;'>結果:</span><br>天賦1: " +
                 "<span style='color: yellow;'>"+myArray[first] + first + "</span>"+"<br>天賦2: " +
