@@ -25,7 +25,7 @@
             }
             .side-image {
                 
-                margin: 0 10px; 
+                margin: 20 20px; 
             }
             .dc {
                 color: rgb(255, 174, 0);
@@ -36,7 +36,10 @@
     <body>
         <style>
             p {
-              font-size: 16px;
+              font-size: 120%;
+            }
+            input{
+                font-size: 120%;
             }
         </style>
         <div class="container">
@@ -59,7 +62,7 @@
                     <button onclick="calculate()">計算</button>
                     <p id="result">結果： </p>
                     <p id="loyear"></p>
-                    <p> 我才剛學一點塔羅牌 <br> 所以只能產生名稱 不太會解釋 </p>
+                    <p > 我才剛學一點塔羅牌 <br> 所以只能產生名稱 不太會解釋 </p>
                 </form>
                 
                 <div class="side-image">
@@ -82,6 +85,9 @@
         if (num1 < 0 || num1 > currentYear || num2 > 12 || num2 < 1 || num3 > 31 || num3 < 1) {
             document.getElementById('result').innerHTML = '結果: 輸入錯誤生日';
             return;
+        }else if(isNaN(num1)||isNaN(num2)||isNaN(num3)){
+            document.getElementById('result').innerHTML = '結果: 未輸入完整';
+            return;
         }
         if(num1<1000)
             num1+=1911;
@@ -95,9 +101,11 @@
             first = Math.floor(num3%22);
         }
         var yeardiv = 0;
-        while(num1>0){
-            yeardiv+=Math.floor(num1%10);
-            num1=Math.floor(num1/10);
+        var temp = num1;
+        var temp2;
+        while(temp>0){
+            yeardiv+=Math.floor(temp%10);
+            temp=Math.floor(temp/10);
         }      
         var third = Math.floor((yeardiv+num2+num3)%22);
         var second = yeardiv;
@@ -115,24 +123,88 @@
         var fifth = Math.floor((forth+21)%22);
         var sixth = Math.floor((forth+1)%22);
         var seventh = 0;
-        var temp = currentYear-1+num2+num3;
+        temp = currentYear-1+num2+num3;
         while(temp>0){
             seventh+=Math.floor(temp%10);
-            temp/=10;
+            temp=Math.floor(temp/10);
         }
-        seventh = Math.floor(seventh%22);
-        var seventh_1 = Math.floor((seventh+1)%22);
+        var seventh_1 = 0;
+        temp = currentYear+num2+num3;
+        while(temp>0){
+            seventh_1+=Math.floor(temp%10);
+            temp=Math.floor(temp/10);
+        }
+        if(num2==1&&num3==1){
+            temp = 12;
+            temp2 = 31;
+        }else {
+            temp = num2;
+            temp2 = num3-1;
+        }
+        document.getElementById('result').innerHTML = "<span style='color: AQUA;'>結果:</span><br>天賦1: " +
+            "<span style='color: yellow;'>"+myArray[first] + first + "</span>"+"<br>天賦2: " +
+            "<span style='color: yellow;'>"+myArray[second] + second + "</span>"+"<br>天賦3: " +
+            "<span style='color: yellow;'>"+myArray[third] + third + "</span>"+"<br>天賦4: " +
+            "<span style='color: yellow;'>"+myArray[forth] + forth + "</span>"+"<br>天賦5: " +
+            "<span style='color: yellow;'>"+myArray[fifth] + fifth + "</span>"+"<br>天賦6: " +
+            "<span style='color: yellow;'>"+myArray[sixth] + sixth + "</span>"+"<br>流年數: <br>" +
+            (currentYear-1)+"/"+num2+"/"+num3+"~"+currentYear+"/"+temp+"/"+temp2+"  "+"<span style='color: yellow;'>"+myArray[seventh] + seventh + "</span>" + "<br>" + 
+            currentYear+"/"+num2+"/"+num3+"~"+(currentYear+1)+"/"+temp+"/"+temp2+"  "+"<span style='color: yellow;'>"+myArray[seventh_1] + seventh_1 + "</span><br>";
         
-            document.getElementById('result').innerHTML = "<span style='color: AQUA;'>結果:</span><br>天賦1: " +
-                "<span style='color: yellow;'>"+myArray[first] + first + "</span>"+"<br>天賦2: " +
-                "<span style='color: yellow;'>"+myArray[second] + second + "</span>"+"<br>天賦3: " +
-                "<span style='color: yellow;'>"+myArray[third] + third + "</span>"+"<br>天賦4: " +
-                "<span style='color: yellow;'>"+myArray[forth] + forth + "</span>"+"<br>天賦5: " +
-                "<span style='color: yellow;'>"+myArray[fifth] + fifth + "</span>"+"<br>天賦6: " +
-                "<span style='color: yellow;'>"+myArray[sixth] + sixth + "</span>"+"<br>流年數: <br>" +
-                (currentYear-1)+"/"+num2+"/"+num3+"~"+currentYear+"/"+num2+"/"+(num3-1)+"  "+"<span style='color: yellow;'>"+myArray[seventh] + seventh + "</span>" + "<br>" + 
-                currentYear+"/"+num2+"/"+num3+"~"+(currentYear+1)+"/"+num2+"/"+(num3-1)+"  "+"<span style='color: yellow;'>"+myArray[seventh_1] + seventh_1 + "</span>";
-        
+        var flowyear = 0;
+        temp = num1;
+        while(temp>0){
+            flowyear+=Math.floor(temp%10);
+            temp=Math.floor(temp/10);
+        }temp = num2;
+        while(temp>0){
+            flowyear+=Math.floor(temp%10);
+            temp=Math.floor(temp/10);
+        }temp = num3;
+        while(temp>0){
+            flowyear+=Math.floor(temp%10);
+            temp=Math.floor(temp/10);
+        }
+        var  twoDimArray = [
+            [1, 10, 19],
+            [2, 11, 20],
+            [3, 12, 21],
+            [4, 13, 0],
+            [5, 14],
+            [6, 15],
+            [7, 16],
+            [8, 17],
+            [9, 18],
+        ];
+        var booleanArray = Array.from({ length: 23 }).map(() => false);
+        while(flowyear>=10){
+            if(flowyear<=22)
+                booleanArray[Math.floor(flowyear%22)] = true;
+            flowyear = Math.floor(flowyear/10+flowyear%10);
+        }
+        booleanArray[Math.floor(flowyear%22)] = true;
+        var newText = document.createTextNode("導師: ");
+        document.getElementById('result').appendChild(newText);
+        for(let i=0;i<twoDimArray[flowyear-1].length;i++){
+            if(booleanArray[twoDimArray[flowyear-1][i]]==true){
+                let newText = document.createElement("span");
+                newText.style.color = "yellow";
+                newText.innerHTML = twoDimArray[flowyear-1][i] + " ";
+                document.getElementById('result').appendChild(newText);
+            } 
+        }
+        var newText = document.createTextNode("陰影: ");
+        document.getElementById('result').appendChild(newText);
+        for(let i=0;i<twoDimArray[flowyear-1].length;i++){
+            if(booleanArray[twoDimArray[flowyear-1][i]]==false){
+                let newText = document.createElement("span");
+                newText.style.color = "yellow";
+                newText.innerHTML = twoDimArray[flowyear-1][i] + " ";
+                document.getElementById('result').appendChild(newText);
+            } 
+        }
+        newText = document.createTextNode(twoDimArray[flowyear][i]+" ");
+            document.getElementById('result').appendChild(newText);
     }   
 
 </script>
