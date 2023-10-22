@@ -15,6 +15,7 @@
                 flex-direction: column; 
                 justify-content: center;
                 align-items: center;
+                margin: 0;
             }
             .container_row {
                 display: flex;
@@ -24,7 +25,8 @@
 
             }
             .side-image {
-                
+                display: flex;
+                flex-direction: row;
                 margin: 20 20px; 
             }
             .dc {
@@ -35,42 +37,47 @@
     </head>
     <body>
         <style>
-            p {
-              font-size: 120%;
+            p{
+                margin: 0;
+                font-size: 120%;
             }
             input{
                 font-size: 120%;
             }
         </style>
         <div class="container">
-            <h1>大家好</h1>
-            <p >平常的我喜歡玩遊戲, 例如Minecraft, League of Legend, GTAV, Valorant</p><br>
-            <p class="dc">我的Discord:bob0127</p>
-            <a href="https://www.instagram.com/bobbob930127/" target="_blank" style="color:aqua">我的Instagram</a>
+                <p>能一眼洞悉</p>   
+                <p>身邊愛人、親人、朋友、上司、下屬</p> 
+                <p>內心真正想說的話、在做的事、真假虛偽。</p>
+                <br>
+                <p>能找到</p>
+                <p>真正屬於自己最拿手的能力</p>  
+                <p>知道如何使用、如何改變困局</p>
+                <p>活出實實在在的夢想生活</p>
             <div class="container_row">
                 <div class="side-image">
                     <img src="https://upload.wikimedia.org/wikipedia/zh/thumb/d/d0/JaketheDog.png/220px-JaketheDog.png" alt="Side Image">
                 </div>
                 <form onsubmit="event.preventDefault();">
-                    
                     <input type="text" id="year" placeholder="輸入出生年" required>
                     <br>
                     <input type="text" id = "month" placeholder="輸入出生月" required>
                     <br>
                     <input type="text" id = "day" placeholder="輸入出生日" required>
                     <br>
+                    <input type="text" id = "hour" placeholder="輸入出生時辰(24小時制)" >
+                    <br>
+                    <input type="text" id = "minute" placeholder="輸入出生時辰(分)" >
+                    <br>
                     <button onclick="calculate()">計算</button>
-                    <p id="result">結果： </p>
-                    <p id="loyear"></p>
-                    <p > 我才剛學一點塔羅牌 <br> 所以只能產生名稱 不太會解釋 </p>
                 </form>
-                
                 <div class="side-image">
                     <img src="https://upload.wikimedia.org/wikipedia/zh/e/e5/FinnAdventureTime.png" alt="Side Image">
                 </div>
-            </div>
-        </div>
-        
+            </div>    
+            <p id="result"></p>
+            <p id="loyear"></p>
+        </div>           
     </body>
 </html>
 
@@ -98,40 +105,40 @@
                 first=Math.floor(first/10+first%10);
             }
         }else {
-            first = Math.floor(num3%22);
+            first = num3%22;
         }
         var yeardiv = 0;
         var temp = num1;
         var temp2;
         while(temp>0){
-            yeardiv+=Math.floor(temp%10);
+            yeardiv+=temp%10;
             temp=Math.floor(temp/10);
         }      
-        var third = Math.floor((yeardiv+num2+num3)%22);
+        var third = (yeardiv+num2+num3)%22;
         var second = yeardiv;
         if(num2>9) second += Math.floor(num2/10+num2%10);
         else second += num2;
         if(num3>9)second +=Math.floor(num3/10+num3%10);
         else second += num3;
-        second=Math.floor(second%22);
+        second%=22;
         
         var myArray = ["愚者","魔術師","女祭司","皇后","國王","教皇","戀人","戰車","力量","隱者","命運之輪","正義","吊人",
 "死神","節制","惡魔","塔","星星","月亮","太陽","審判","世界"];
         // 將結果顯示在頁面上
         var list = [0,31,59,90,120,151,181,212,243,273,304,334];
-        var forth = Math.floor((list[num2-1]+num3)%22);
-        var fifth = Math.floor((forth+21)%22);
-        var sixth = Math.floor((forth+1)%22);
+        var forth = (list[num2-1]+num3)%22;
+        var fifth = (forth+21)%22;
+        var sixth = (forth+1)%22;
         var seventh = 0;
         temp = currentYear-1+num2+num3;
         while(temp>0){
-            seventh+=Math.floor(temp%10);
+            seventh+=temp%10;
             temp=Math.floor(temp/10);
         }
         var seventh_1 = 0;
         temp = currentYear+num2+num3;
         while(temp>0){
-            seventh_1+=Math.floor(temp%10);
+            seventh_1+=temp%10;
             temp=Math.floor(temp/10);
         }
         if(num2==1&&num3==1){
@@ -141,7 +148,7 @@
             temp = num2;
             temp2 = num3-1;
         }
-        document.getElementById('result').innerHTML = "<span style='color: AQUA;'>結果:</span><br>天賦1: " +
+        document.getElementById('result').innerHTML = "<span style='color: AQUA;'>結果:</span><br>天神: " +
             "<span style='color: yellow;'>"+myArray[first] + first + "</span>"+"<br>天賦2: " +
             "<span style='color: yellow;'>"+myArray[second] + second + "</span>"+"<br>天賦3: " +
             "<span style='color: yellow;'>"+myArray[third] + third + "</span>"+"<br>天賦4: " +
@@ -154,15 +161,15 @@
         var flowyear = 0;
         temp = num1;
         while(temp>0){
-            flowyear+=Math.floor(temp%10);
+            flowyear+=temp%10;
             temp=Math.floor(temp/10);
         }temp = num2;
         while(temp>0){
-            flowyear+=Math.floor(temp%10);
+            flowyear+=temp%10;
             temp=Math.floor(temp/10);
         }temp = num3;
         while(temp>0){
-            flowyear+=Math.floor(temp%10);
+            flowyear+=temp%10;
             temp=Math.floor(temp/10);
         }
         var  twoDimArray = [
@@ -179,32 +186,55 @@
         var booleanArray = Array.from({ length: 23 }).map(() => false);
         while(flowyear>=10){
             if(flowyear<=22)
-                booleanArray[Math.floor(flowyear%22)] = true;
+                booleanArray[flowyear%22] = true;
             flowyear = Math.floor(flowyear/10+flowyear%10);
         }
-        booleanArray[Math.floor(flowyear%22)] = true;
+        booleanArray[flowyear%22] = true;
         var newText = document.createTextNode("導師: ");
         document.getElementById('result').appendChild(newText);
+        document.getElementById('result').appendChild(document.createElement("br"));
         for(let i=0;i<twoDimArray[flowyear-1].length;i++){
             if(booleanArray[twoDimArray[flowyear-1][i]]==true){
                 let newText = document.createElement("span");
                 newText.style.color = "yellow";
-                newText.innerHTML = twoDimArray[flowyear-1][i] + " ";
+                newText.innerHTML = twoDimArray[flowyear-1][i] + " <br>";
                 document.getElementById('result').appendChild(newText);
             } 
         }
         var newText = document.createTextNode("陰影: ");
         document.getElementById('result').appendChild(newText);
+        document.getElementById('result').appendChild(document.createElement("br"));
         for(let i=0;i<twoDimArray[flowyear-1].length;i++){
             if(booleanArray[twoDimArray[flowyear-1][i]]==false){
                 let newText = document.createElement("span");
                 newText.style.color = "yellow";
-                newText.innerHTML = twoDimArray[flowyear-1][i] + " ";
+                newText.innerHTML = myArray[twoDimArray[flowyear-1][i]]+twoDimArray[flowyear-1][i] + " <br>";
                 document.getElementById('result').appendChild(newText);
             } 
         }
-        newText = document.createTextNode(twoDimArray[flowyear][i]+" ");
+        var num4 = parseInt(document.getElementById('hour').value);
+        var num5 = parseInt(document.getElementById('minute').value); 
+        var plant = [0,0,0,0,0,0,0,0,0,0,0,0,0];
+        plant[0] = second;
+        plant[1] = (num2+num3)%22;
+        plant[2] = num3%22;
+        plant[3] = (plant[0] + num3)%22;
+        plant[4] = (plant[0] - num3 + 66)%22;
+        plant[5] = (plant[0] + num2)%22;
+        plant[6] = (plant[0] - num2 + 66)%22;
+        plant[7] = (plant[0] + num4)%22;
+        plant[8] = (plant[0] - num4 + 66)%22;
+        plant[9] = (plant[0] + num1)%22;
+        plant[10] = (plant[0] - num1+ 2200)%22;
+        plant[11] = (plant[0] + num5)%22;
+        plant[12] = (plant[0] - num5 + 66 )%22;
+        document.getElementById('result').appendChild(document.createElement("br"));
+        for(let i=0;i<plant.length;i++){
+            let newText = document.createElement("span");
+            newText.style.color = "yellow";
+            newText.innerHTML = myArray[plant[i]] + plant[i] + " <br>";
             document.getElementById('result').appendChild(newText);
+        }
     }   
 
 </script>
