@@ -76,7 +76,6 @@
                 </div>
             </div>    
             <p id="result"></p>
-            <p id="loyear"></p>
         </div>           
     </body>
 </html>
@@ -98,14 +97,16 @@
         }
         if(num1<1000)
             num1+=1911;
-        var first = 0;
+        var god = [0, 0, 0, 0, 0, 0, 0, 0];
+        var element = [0, 0, 0, 0];
+        const element_name = ["風","水","火","土"];
         if(num3>22){
-            var first=num3;
-            while(first>=10){
-                first=Math.floor(first/10+first%10);
+            god[0]=num3;
+            while(god[0]>=10){
+                god[0]=Math.floor(god[0]/10+god[0]%10);
             }
         }else {
-            first = num3%22;
+            god[0] = num3%22;
         }
         var yeardiv = 0;
         var temp = num1;
@@ -114,31 +115,32 @@
             yeardiv+=temp%10;
             temp=Math.floor(temp/10);
         }      
-        var third = (yeardiv+num2+num3)%22;
-        var second = yeardiv;
-        if(num2>9) second += Math.floor(num2/10+num2%10);
-        else second += num2;
-        if(num3>9)second +=Math.floor(num3/10+num3%10);
-        else second += num3;
-        second%=22;
+        god[2] = (yeardiv+num2+num3)%22;
+        god[1] = yeardiv;
+        if(num2>9) god[1] += Math.floor(num2/10+num2%10);
+        else god[1] += num2;
+        if(num3>9) god[1] +=Math.floor(num3/10+num3%10);
+        else god[1] += num3;
+        god[1]%=22;
         
-        var myArray = ["愚者","魔術師","女祭司","皇后","國王","教皇","戀人","戰車","力量","隱者","命運之輪","正義","吊人",
+        const myArray = ["愚者","魔術師","女祭司","皇后","國王","教皇","戀人","戰車","力量","隱者","命運之輪","正義","吊人",
 "死神","節制","惡魔","塔","星星","月亮","太陽","審判","世界"];
-        // 將結果顯示在頁面上
+        const attributes = [0, 0, 1, 1, 2, 3, 0, 1, 2, 3, 3, 0, 1, 1, 2, 3, 2, 0, 1, 2, 0, 3];
+        const god_name =  ["戴奧尼索斯Dionysus","莫丘利/赫密斯Hermes","希拉Hera","阿芙蘿黛蒂Aphrodite/維納斯Vinus","艾瑞斯/Mars","狄密特Demeter","丘比特Eros",
+        "赫斯提亜Hestia","赫拉克羅斯Heracross","達芙妮/阿提米斯Artemis","宙斯Zeus","雅典娜Athena","波賽頓Poseidon/Neptune","阿基里斯Achilles",
+        "普羅米修斯Prometheus","伊底帕斯Oedipus","赫菲斯托斯Hephaestus","澤菲羅斯Zephyros","波瑟芬妮Perciphen","阿波羅Apollo","黑帝斯Hades","克羅諾斯Kronos"];
         var list = [0,31,59,90,120,151,181,212,243,273,304,334];
-        var forth = (list[num2-1]+num3)%22;
-        var fifth = (forth+21)%22;
-        var sixth = (forth+1)%22;
-        var seventh = 0;
+        god[3] = (list[num2-1]+num3)%22;
+        god[4] = (god[3]+21)%22;
+        god[5] = (god[3]+1)%22;
         temp = currentYear-1+num2+num3;
         while(temp>0){
-            seventh+=temp%10;
+            god[6]+=temp%10;
             temp=Math.floor(temp/10);
         }
-        var seventh_1 = 0;
         temp = currentYear+num2+num3;
         while(temp>0){
-            seventh_1+=temp%10;
+            god[7]+=temp%10;
             temp=Math.floor(temp/10);
         }
         if(num2==1&&num3==1){
@@ -148,16 +150,14 @@
             temp = num2;
             temp2 = num3-1;
         }
-        document.getElementById('result').innerHTML = "<span style='color: AQUA;'>結果:</span><br>天神: " +
-            "<span style='color: yellow;'>"+myArray[first] + first + "</span>"+"<br>天賦2: " +
-            "<span style='color: yellow;'>"+myArray[second] + second + "</span>"+"<br>天賦3: " +
-            "<span style='color: yellow;'>"+myArray[third] + third + "</span>"+"<br>天賦4: " +
-            "<span style='color: yellow;'>"+myArray[forth] + forth + "</span>"+"<br>天賦5: " +
-            "<span style='color: yellow;'>"+myArray[fifth] + fifth + "</span>"+"<br>天賦6: " +
-            "<span style='color: yellow;'>"+myArray[sixth] + sixth + "</span>"+"<br>流年數: <br>" +
-            (currentYear-1)+"/"+num2+"/"+num3+"~"+currentYear+"/"+temp+"/"+temp2+"  "+"<span style='color: yellow;'>"+myArray[seventh] + seventh + "</span>" + "<br>" + 
-            currentYear+"/"+num2+"/"+num3+"~"+(currentYear+1)+"/"+temp+"/"+temp2+"  "+"<span style='color: yellow;'>"+myArray[seventh_1] + seventh_1 + "</span><br>";
-        
+        document.getElementById('result').innerHTML = "<span style='color: AQUA;'>結果:</span><br>天神: <br>";
+        for(let i=0;i<6;i++){
+            let newText = document.createElement("span");
+            newText.style.color = "yellow";
+            newText.innerHTML = god[i] + " " + god_name[god[i]] + " <br>";
+            document.getElementById('result').appendChild(newText);
+            element[attributes[god[i]]]++;
+        }  
         var flowyear = 0;
         temp = num1;
         while(temp>0){
@@ -197,8 +197,9 @@
             if(booleanArray[twoDimArray[flowyear-1][i]]==true){
                 let newText = document.createElement("span");
                 newText.style.color = "yellow";
-                newText.innerHTML = twoDimArray[flowyear-1][i] + " <br>";
+                newText.innerHTML = myArray[twoDimArray[flowyear-1][i]]+twoDimArray[flowyear-1][i] + " <br>";
                 document.getElementById('result').appendChild(newText);
+                element[attributes[twoDimArray[flowyear-1][i]]]++;
             } 
         }
         var newText = document.createTextNode("陰影: ");
@@ -215,7 +216,9 @@
         var num4 = parseInt(document.getElementById('hour').value);
         var num5 = parseInt(document.getElementById('minute').value); 
         var plant = [0,0,0,0,0,0,0,0,0,0,0,0,0];
-        plant[0] = second;
+        var plant_name = ["本命循環","情緒的安全感","學習＆傳達","戀情＆人際關係","行動＆創造","生命格局","傳統＆制約","創意＆自由","愛與藝術","靈性發展",
+    "特質＆形象","良善＆美德","節制＆特質"];
+        plant[0] = god[1];
         plant[1] = (num2+num3)%22;
         plant[2] = num3%22;
         plant[3] = (plant[0] + num3)%22;
@@ -232,7 +235,16 @@
         for(let i=0;i<plant.length;i++){
             let newText = document.createElement("span");
             newText.style.color = "yellow";
-            newText.innerHTML = myArray[plant[i]] + plant[i] + " <br>";
+           if(!isNaN(plant[i])){
+                newText.innerHTML = plant_name[i]+": "+myArray[plant[i]] + plant[i] + " <br>";
+                element[attributes[plant[i]]]++;
+           }
+            document.getElementById('result').appendChild(newText);
+        }
+        for(let i=0;i<4;i++){
+            let newText = document.createElement("span");
+            newText.style.color = "yellow";
+            newText.innerHTML = element_name[i] + element[i] + "<br>";
             document.getElementById('result').appendChild(newText);
         }
     }   
