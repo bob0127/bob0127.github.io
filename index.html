@@ -2,6 +2,8 @@
 <html>
     <head>
         <title>塔羅牌</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
         <style>
             body {
               background-image: url('https://farm2.staticflickr.com/1859/30277527828_67cf649d56_k.jpg');
@@ -33,6 +35,29 @@
                 color: rgb(255, 174, 0);
                 font-weight: bold;
             }
+            .box {
+                display: none;
+                width: 67%; /* 設定框框的寬度為 80% */
+                margin: 0 auto; /* 讓框框水平置中 */
+                border: 0px #ccc; /* 加入邊框以示範 */
+                overflow: hidden; /* 清除浮動 */
+            }
+            .element {
+                flex: 1;
+                float: left; /* 讓元素浮動在左側 */
+                box-sizing: border-box; /* 考慮邊框和內邊距在內，使得設定寬度更符合期望 */
+                border: 0px solid #ddd; /* 加入邊框以示範 */
+                padding: 5px; /* 加入內邊距以示範 */
+                text-align: center;
+                font-size: 120%;
+            }
+            .headline {
+                display: flex;
+                flex-direction: column; 
+                justify-content: center;
+                align-items: center;
+                margin: 0;
+            }
         </style>
     </head>
     <body>
@@ -46,6 +71,7 @@
             }
         </style>
         <div class="container">
+            <div class="headline">
                 <p>能一眼洞悉</p>   
                 <p>身邊愛人、親人、朋友、上司、下屬</p> 
                 <p>內心真正想說的話、在做的事、真假虛偽。</p>
@@ -54,6 +80,7 @@
                 <p>真正屬於自己最拿手的能力</p>  
                 <p>知道如何使用、如何改變困局</p>
                 <p>活出實實在在的夢想生活</p>
+            </div>    
             <div class="container_row">
                 <div class="side-image">
                     <img src="https://upload.wikimedia.org/wikipedia/zh/thumb/d/d0/JaketheDog.png/220px-JaketheDog.png" alt="Side Image">
@@ -69,20 +96,55 @@
                     <br>
                     <input type="text" id = "minute" placeholder="輸入出生時辰(分)" >
                     <br>
-                    <button onclick="calculate()">計算</button>
+                    <button id = "button1" onclick="calculate()">計算</button>
                 </form>
                 <div class="side-image">
                     <img src="https://upload.wikimedia.org/wikipedia/zh/e/e5/FinnAdventureTime.png" alt="Side Image">
                 </div>
             </div>    
+            <button id = "button2">重來</button>
             <p id="result"></p>
-        </div>           
+            <div class="box">
+                <div class="element">風型氣質
+                    <p id = "wind"></p>
+                </div>
+                <div class="element">水型氣質
+                    <p id = "water"></p>
+                </div>
+                <div class="element">火型氣質
+                    <p id = "fire"></p>
+                </div>
+                <div class="element">土型氣質
+                    <p id = "dirt"></p>
+                </div>
+            </div>
+            <p id = "flowyear"></p>
+        </div>  
+        <script>
+            $(document).ready(function () {
+                $("#button1").on("click", function () {
+                    $(".side-image").animate({
+                        rotate: '+=360deg'
+                    }, {
+                        step: function (now, fx) {
+                            $(".side-image").css('transform', 'rotate(' + now + ')');
+                        },
+                        duration: 2000
+                    });
+                    $(".headline").css("color","yellow");
+                    $("form").fadeOut();
+                });
+                $("#button2").on("click", function () {
+                    $("form").slideDown();
+                    $(".headline").css("color","white");
+                });
+            });
+        </script>        
     </body>
 </html>
 
 <script>
     function calculate() {
-        // 獲取用戶輸入的值
         var num1 = parseInt(document.getElementById('year').value);
         var num2 = parseInt(document.getElementById('month').value);
         var num3 = parseInt(document.getElementById('day').value);
@@ -90,15 +152,17 @@
         var currentYear = currentDate.getFullYear();
         if (num1 < 0 || num1 > currentYear || num2 > 12 || num2 < 1 || num3 > 31 || num3 < 1) {
             document.getElementById('result').innerHTML = '結果: 輸入錯誤生日';
+            document.querySelector('.box').style.display = 'none';
             return;
         }else if(isNaN(num1)||isNaN(num2)||isNaN(num3)){
             document.getElementById('result').innerHTML = '結果: 未輸入完整';
+            document.querySelector('.box').style.display = 'none';
             return;
         }
         if(num1<1000)
             num1+=1911;
         var god = [0, 0, 0, 0, 0, 0, 0, 0];
-        var element = [0, 0, 0, 0];
+        var element = [0, 0, 0, 0, 0];
         const element_name = ["風","水","火","土"];
         if(num3>22){
             god[0]=num3;
@@ -111,6 +175,7 @@
         var yeardiv = 0;
         var temp = num1;
         var temp2;
+        var temp3;
         while(temp>0){
             yeardiv+=temp%10;
             temp=Math.floor(temp/10);
@@ -144,19 +209,20 @@
             temp=Math.floor(temp/10);
         }
         if(num2==1&&num3==1){
-            temp = 12;
-            temp2 = 31;
+            temp2 = 12;
+            temp3 = 31;
         }else {
-            temp = num2;
-            temp2 = num3-1;
+            temp2 = num2;
+            temp3 = num3-1;
         }
-        document.getElementById('result').innerHTML = "<span style='color: AQUA;'>結果:</span><br>天神: <br>";
+        document.getElementById('result').innerHTML = "<span style='color: AQUA;'>大整合盤:</span><br>天神: <br>";
         for(let i=0;i<6;i++){
             let newText = document.createElement("span");
-            newText.style.color = "yellow";
+            newText.style.color = "AQUA";
             newText.innerHTML = god[i] + " " + god_name[god[i]] + " <br>";
             document.getElementById('result').appendChild(newText);
             element[attributes[god[i]]]++;
+            element[4]++;
         }  
         var flowyear = 0;
         temp = num1;
@@ -190,25 +256,26 @@
             flowyear = Math.floor(flowyear/10+flowyear%10);
         }
         booleanArray[flowyear%22] = true;
-        var newText = document.createTextNode("導師: ");
+        var newText = document.createTextNode("潛意識: ");
         document.getElementById('result').appendChild(newText);
         document.getElementById('result').appendChild(document.createElement("br"));
         for(let i=0;i<twoDimArray[flowyear-1].length;i++){
             if(booleanArray[twoDimArray[flowyear-1][i]]==true){
                 let newText = document.createElement("span");
-                newText.style.color = "yellow";
+                newText.style.color = "AQUA";
                 newText.innerHTML = myArray[twoDimArray[flowyear-1][i]]+twoDimArray[flowyear-1][i] + " <br>";
                 document.getElementById('result').appendChild(newText);
                 element[attributes[twoDimArray[flowyear-1][i]]]++;
+                element[4]++;
             } 
         }
-        var newText = document.createTextNode("陰影: ");
+        var newText = document.createTextNode("無意識: ");
         document.getElementById('result').appendChild(newText);
         document.getElementById('result').appendChild(document.createElement("br"));
         for(let i=0;i<twoDimArray[flowyear-1].length;i++){
             if(booleanArray[twoDimArray[flowyear-1][i]]==false){
                 let newText = document.createElement("span");
-                newText.style.color = "yellow";
+                newText.style.color = "AQUA";
                 newText.innerHTML = myArray[twoDimArray[flowyear-1][i]]+twoDimArray[flowyear-1][i] + " <br>";
                 document.getElementById('result').appendChild(newText);
             } 
@@ -234,19 +301,25 @@
         document.getElementById('result').appendChild(document.createElement("br"));
         for(let i=0;i<plant.length;i++){
             let newText = document.createElement("span");
-            newText.style.color = "yellow";
-           if(!isNaN(plant[i])){
-                newText.innerHTML = plant_name[i]+": "+myArray[plant[i]] + plant[i] + " <br>";
-                element[attributes[plant[i]]]++;
-           }
-            document.getElementById('result').appendChild(newText);
+            if(!isNaN(plant[i])){
+                newText.style.color = "white";
+                newText.innerHTML = plant_name[i]+": ";
+                document.getElementById('result').appendChild(newText);
+                let newValue = document.createElement("span");
+                newValue.style.color = "AQUA";
+                newValue.innerHTML = myArray[plant[i]] + plant[i] + " <br>";
+                document.getElementById('result').appendChild(newValue);
+            }
         }
-        for(let i=0;i<4;i++){
-            let newText = document.createElement("span");
-            newText.style.color = "yellow";
-            newText.innerHTML = element_name[i] + element[i] + "<br>";
-            document.getElementById('result').appendChild(newText);
-        }
+        document.getElementById('wind').innerHTML = "<span style='color: AQUA;'>"+(element[0]*100/element[4]).toFixed(1)+'%'+"</span";
+        document.getElementById('water').innerHTML ="<span style='color: AQUA;'>"+(element[1]*100/element[4]).toFixed(1)+'%'+"</span";
+        document.getElementById('fire').innerHTML = "<span style='color: AQUA;'>"+(element[2]*100/element[4]).toFixed(1)+'%'+"</span";
+        document.getElementById('dirt').innerHTML = "<span style='color: AQUA;'>"+(element[3]*100/element[4]).toFixed(1)+'%'+"</span";
+        document.querySelector('.box').style.display = 'flex';
+        
+        document.getElementById('flowyear').innerHTML = "流年數: <br>" +
+            (currentYear-1)+"/"+num2+"/"+num3+"~"+currentYear+"/"+temp2+"/"+temp3+"  "+"<span style='color: AQUA;'>"+myArray[god[6]] + god[6] + "</span>" + "<br>" + 
+            currentYear+"/"+num2+"/"+num3+"~"+(currentYear+1)+"/"+temp2+"/"+temp3+"  "+"<span style='color: AQUA;'>"+myArray[god[7]] + god[7] + "</span><br>";
     }   
 
 </script>
