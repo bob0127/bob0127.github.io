@@ -2,13 +2,15 @@
 <html>
     <head>
         <title>塔羅牌</title>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
         <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="styles.css">
         <style>
             body {
               background-image: url('https://farm2.staticflickr.com/1859/30277527828_67cf649d56_k.jpg');
               color: white; 
               display: flex;
+              background-position: center;
+              background-size: cover;
               justify-content: center;
               align-items: center;
             }
@@ -18,6 +20,7 @@
                 justify-content: center;
                 align-items: center;
                 margin: 0;
+                z-index: 995;
             }
             .container_row {
                 display: flex;
@@ -31,16 +34,13 @@
                 flex-direction: row;
                 margin: 20 20px; 
             }
-            .dc {
-                color: rgb(255, 174, 0);
-                font-weight: bold;
-            }
             .box {
                 display: none;
-                width: 67%; /* 設定框框的寬度為 80% */
+                width: 90%; /* 設定框框的寬度為 80% */
                 margin: 0 auto; /* 讓框框水平置中 */
                 border: 0px #ccc; /* 加入邊框以示範 */
                 overflow: hidden; /* 清除浮動 */
+
             }
             .element {
                 flex: 1;
@@ -70,9 +70,22 @@
                 font-size: 120%;
             }
         </style>
+        <section>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </section>
         <div class="container">
             <div class="headline">
-                <p>能一眼洞悉</p>   
+                <p >能一眼洞悉</p>   
                 <p>身邊愛人、親人、朋友、上司、下屬</p> 
                 <p>內心真正想說的話、在做的事、真假虛偽。</p>
                 <br>
@@ -103,22 +116,14 @@
                 </div>
             </div>    
             <button id = "button2">重來</button>
-            <p id="result"></p>
+            <div id="result"></div>
             <div class="box">
-                <div class="element">風型氣質
-                    <p id = "wind"></p>
-                </div>
-                <div class="element">水型氣質
-                    <p id = "water"></p>
-                </div>
-                <div class="element">火型氣質
-                    <p id = "fire"></p>
-                </div>
-                <div class="element">土型氣質
-                    <p id = "dirt"></p>
-                </div>
+                <div class="element" id = "wind"></div>
+                <div class="element" id = "water"></div>
+                <div class="element" id = "fire"></div>
+                <div class="element" id = "dirt"></div>
             </div>
-            <p id = "flowyear"></p>
+            <div id = "flowyear"></div>
         </div>  
         <script>
             $(document).ready(function () {
@@ -215,15 +220,12 @@
             temp2 = num2;
             temp3 = num3-1;
         }
-        document.getElementById('result').innerHTML = "<span style='color: AQUA;'>大整合盤:</span><br>天神: <br>";
-        for(let i=0;i<6;i++){
-            let newText = document.createElement("span");
-            newText.style.color = "AQUA";
-            newText.innerHTML = god[i] + " " + god_name[god[i]] + " <br>";
-            document.getElementById('result').appendChild(newText);
+        document.getElementById('result').innerHTML = "<p style='color: AQUA;'>大整合盤:</p><br><p>天神: </p><br>";
+        for(let i=0;i<6;i++){     
+            document.getElementById('result').innerHTML += "<p style='color: Yellow;'>"+" "+god[i] + " " + god_name[god[i]]+"</p>";
             element[attributes[god[i]]]++;
             element[4]++;
-        }  
+        }
         var flowyear = 0;
         temp = num1;
         while(temp>0){
@@ -256,28 +258,18 @@
             flowyear = Math.floor(flowyear/10+flowyear%10);
         }
         booleanArray[flowyear%22] = true;
-        var newText = document.createTextNode("潛意識: ");
-        document.getElementById('result').appendChild(newText);
-        document.getElementById('result').appendChild(document.createElement("br"));
+        document.getElementById('result').innerHTML += "<br><p>潛意識:</p>";
         for(let i=0;i<twoDimArray[flowyear-1].length;i++){
             if(booleanArray[twoDimArray[flowyear-1][i]]==true){
-                let newText = document.createElement("span");
-                newText.style.color = "AQUA";
-                newText.innerHTML = myArray[twoDimArray[flowyear-1][i]]+twoDimArray[flowyear-1][i] + " <br>";
-                document.getElementById('result').appendChild(newText);
+                document.getElementById('result').innerHTML += "<p style='color:  Yellow;'>"+myArray[twoDimArray[flowyear-1][i]]+twoDimArray[flowyear-1][i]+"</p>";
                 element[attributes[twoDimArray[flowyear-1][i]]]++;
                 element[4]++;
             } 
         }
-        var newText = document.createTextNode("無意識: ");
-        document.getElementById('result').appendChild(newText);
-        document.getElementById('result').appendChild(document.createElement("br"));
+        document.getElementById('result').innerHTML += "<p>無意識:</p>";
         for(let i=0;i<twoDimArray[flowyear-1].length;i++){
             if(booleanArray[twoDimArray[flowyear-1][i]]==false){
-                let newText = document.createElement("span");
-                newText.style.color = "AQUA";
-                newText.innerHTML = myArray[twoDimArray[flowyear-1][i]]+twoDimArray[flowyear-1][i] + " <br>";
-                document.getElementById('result').appendChild(newText);
+                document.getElementById('result').innerHTML += "<p style='color:  Yellow;'>"+myArray[twoDimArray[flowyear-1][i]]+twoDimArray[flowyear-1][i]+"</p>";
             } 
         }
         var num4 = parseInt(document.getElementById('hour').value);
@@ -298,28 +290,24 @@
         plant[10] = (plant[0] - num1+ 2200)%22;
         plant[11] = (plant[0] + num5)%22;
         plant[12] = (plant[0] - num5 + 66 )%22;
-        document.getElementById('result').appendChild(document.createElement("br"));
+        document.getElementById('result').innerHTML += "<br>";
         for(let i=0;i<plant.length;i++){
-            let newText = document.createElement("span");
             if(!isNaN(plant[i])){
-                newText.style.color = "white";
-                newText.innerHTML = plant_name[i]+": ";
-                document.getElementById('result').appendChild(newText);
-                let newValue = document.createElement("span");
-                newValue.style.color = "AQUA";
-                newValue.innerHTML = myArray[plant[i]] + plant[i] + " <br>";
-                document.getElementById('result').appendChild(newValue);
+                document.getElementById('result').innerHTML += "<p style='display:inline-block;'>"+plant_name[i]+": "+"</p>";
+                document.getElementById('result').innerHTML += "<p style='color: Yellow; display:inline-block;'>"+myArray[plant[i]] + plant[i] +"</p><br>";
             }
         }
-        document.getElementById('wind').innerHTML = "<span style='color: AQUA;'>"+(element[0]*100/element[4]).toFixed(1)+'%'+"</span";
-        document.getElementById('water').innerHTML ="<span style='color: AQUA;'>"+(element[1]*100/element[4]).toFixed(1)+'%'+"</span";
-        document.getElementById('fire').innerHTML = "<span style='color: AQUA;'>"+(element[2]*100/element[4]).toFixed(1)+'%'+"</span";
-        document.getElementById('dirt').innerHTML = "<span style='color: AQUA;'>"+(element[3]*100/element[4]).toFixed(1)+'%'+"</span";
+        document.getElementById('result').innerHTML += "<br>";
+        document.getElementById('wind').innerHTML ="風型氣質"+"<p style='color: Yellow;'>"+(element[0]*100/element[4]).toFixed(1)+'%'+"</p>";
+        document.getElementById('water').innerHTML ="水型氣質"+"<p style='color: Yellow;'>"+(element[1]*100/element[4]).toFixed(1)+'%'+"</p>";
+        document.getElementById('fire').innerHTML ="火型氣質"+"<p style='color: Yellow;'>"+(element[2]*100/element[4]).toFixed(1)+'%'+"</p>";
+        document.getElementById('dirt').innerHTML ="土型氣質"+"<p style='color: Yellow;'>"+(element[3]*100/element[4]).toFixed(1)+'%'+"</p>";
         document.querySelector('.box').style.display = 'flex';
-        
-        document.getElementById('flowyear').innerHTML = "流年數: <br>" +
-            (currentYear-1)+"/"+num2+"/"+num3+"~"+currentYear+"/"+temp2+"/"+temp3+"  "+"<span style='color: AQUA;'>"+myArray[god[6]] + god[6] + "</span>" + "<br>" + 
-            currentYear+"/"+num2+"/"+num3+"~"+(currentYear+1)+"/"+temp2+"/"+temp3+"  "+"<span style='color: AQUA;'>"+myArray[god[7]] + god[7] + "</span><br>";
+        document.getElementById('flowyear').innerHTML = "<br><p>流年數: </p>" +
+            "<p style='display:inline-block;'>"+(currentYear-1)+"/"+num2+"/"+num3+"~"+currentYear+"/"+temp2+"/"+temp3+"  </p>"+
+            "<p style='color: Yellow; display:inline-block;'>"+myArray[god[6]] + god[6] + "</p><br>"+ 
+            "<p style='display:inline-block;'>"+currentYear+"/"+num2+"/"+num3+"~"+(currentYear+1)+"/"+temp2+"/"+temp3+"  </p>"+
+            "<p style='color: Yellow; display:inline-block;'>"+myArray[god[7]] + god[7] + "</p>";
     }   
 
 </script>
