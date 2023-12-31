@@ -6,16 +6,13 @@
         <link rel="stylesheet" href="styles.css">
         <style>
             body {
-              background-image: url('https://farm2.staticflickr.com/1859/30277527828_67cf649d56_k.jpg');
+              background-image: url('background.jpg');
               color: white; 
               display: flex;
               background-position: center;
               background-size: cover;
               justify-content: center;
               align-items: center;
-              background-repeat: no-repeat;
-              width: 100vw;
-              height:100vh;
             }
             .container {
                 display: flex;
@@ -30,7 +27,6 @@
                 flex-direction: row;
                 justify-content: center;
                 align-items: center;
-
             }
             .side-image {
                 display: flex;
@@ -39,11 +35,40 @@
             }
             .box {
                 display: none;
-                width: 90%; /* 設定框框的寬度為 80% */
+                width: 50%; /* 設定框框的寬度為 80% */
                 margin: 0 auto; /* 讓框框水平置中 */
                 border: 0px #ccc; /* 加入邊框以示範 */
                 overflow: hidden; /* 清除浮動 */
+            }
+            .box1 {
+                display: none;
+                grid-template-columns: repeat(4, 1fr);
+                grid-template-rows: repeat(4, 1fr);
+                width: auto;
+                height: auto;
+            }
 
+            .center {
+                grid-column: span 2;
+                grid-row: span 2;
+                text-align: center;
+
+            }
+
+            .outer {
+                grid-column: span 1;
+                grid-row: span 1;     
+                text-align: center;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+            }
+
+            .box2 {
+                display: none;
+                width: 50%; /* 設定框框的寬度為 80% */
+                margin: 0 auto; /* 讓框框水平置中 */
+                border: 0px #ccc; /* 加入邊框以示範 */
+                overflow: hidden; /* 清除浮動 */
             }
             .element {
                 flex: 1;
@@ -70,7 +95,7 @@
                 font-size: 120%;
             }
             input{
-                font-size: 120%;
+                font-size: 150%;
             }
         </style>
         <section>
@@ -102,6 +127,8 @@
                     <img src="try.png" alt="Side Image">
                 </div>
                 <form onsubmit="event.preventDefault();">
+                    <input type="text" id="name" placeholder="輸入姓名" required>
+                    <br>
                     <input type="text" id="year" placeholder="輸入出生年" required>
                     <br>
                     <input type="text" id = "month" placeholder="輸入出生月" required>
@@ -121,6 +148,34 @@
             <button id = "button2">重來</button>
             <div id="result"></div>
             <div class="box">
+                <div class="element" id = "subconscious"></div>
+                <div class="element" id = "noconscious"></div>
+            </div>
+            <br>
+            <br>
+            <div class="box1">
+                <!-- Top Row -->
+                <div class="outer" id = "1"></div>
+                <div class="outer" id = "2"></div>
+                <div class="outer" id = "3"></div>
+                <div class="outer" id = "4"></div>
+                <!-- Middle Row -->
+                <div class="outer" id = "5"></div>
+                <!-- Center -->
+                <div class="center" id = "0"></div>
+                <!-- Middle Row -->
+                <div class="outer" id = "6"></div>
+                <div class="outer" id = "9"></div>
+                <div class="outer" id = "10"></div>
+                <!-- Bottom Row -->
+                <div class="outer" id = "7"></div>
+                <div class="outer" id = "11"></div>
+                <div class="outer" id = "12"></div>
+                <div class="outer" id = "8"></div>
+            </div>
+            <br>
+            <br>
+            <div class="box2">
                 <div class="element" id = "wind"></div>
                 <div class="element" id = "water"></div>
                 <div class="element" id = "fire"></div>
@@ -160,11 +215,17 @@
         var currentYear = currentDate.getFullYear();
         if (num1 < 0 || num1 > currentYear || num2 > 12 || num2 < 1 || num3 > 31 || num3 < 1) {
             document.getElementById('result').innerHTML = '結果: 輸入錯誤生日';
+            document.getElementById('flowyear').innerHTML = '';
             document.querySelector('.box').style.display = 'none';
+            document.querySelector('.box1').style.display = 'none';
+            document.querySelector('.box2').style.display = 'none';
             return;
         }else if(isNaN(num1)||isNaN(num2)||isNaN(num3)){
             document.getElementById('result').innerHTML = '結果: 未輸入完整';
+            document.getElementById('flowyear').innerHTML = '';
             document.querySelector('.box').style.display = 'none';
+            document.querySelector('.box1').style.display = 'none';
+            document.querySelector('.box2').style.display = 'none';
             return;
         }
         if(num1<1000)
@@ -216,14 +277,33 @@
             god[7]+=temp%10;
             temp=Math.floor(temp/10);
         }
-        if(num2==1&&num3==1){
-            temp2 = 12;
-            temp3 = 31;
-        }else {
-            temp2 = num2;
-            temp3 = num3-1;
-        }
-        document.getElementById('result').innerHTML = "<p style='color: AQUA;'>大整合盤:</p><br><p>天神: </p><br>";
+        temp2 = num2;
+        temp3 = num3-1;
+        if(num2==1)temp2 = 12;
+        if(num3==1){
+            temp2--;
+            switch(temp2){
+                case 1:
+                case 3:
+                case 5:
+                case 7:
+                case 8:
+                case 10:
+                case 12:
+                    temp3 = 31;
+                    break;
+                case 4:
+                case 6:
+                case 9:
+                case 11:
+                    temp3 = 30;
+                    break;
+                case 2:
+                    temp3 = 28;
+                    break;
+            }
+        }        
+        document.getElementById('result').innerHTML = "<p style='color: AQUA;'>大整合盤 "+num1+"/"+num2+"/"+num3+":</p><br><p>天神: </p><br>";
         for(let i=0;i<6;i++){     
             document.getElementById('result').innerHTML += "<p style='color: Yellow;'>"+" "+god[i] + " " + god_name[god[i]]+"</p>";
             element[attributes[god[i]]]++;
@@ -261,18 +341,18 @@
             flowyear = Math.floor(flowyear/10+flowyear%10);
         }
         booleanArray[flowyear%22] = true;
-        document.getElementById('result').innerHTML += "<br><p>潛意識:</p>";
+        document.getElementById('subconscious').innerHTML = "潛意識:";
         for(let i=0;i<twoDimArray[flowyear-1].length;i++){
             if(booleanArray[twoDimArray[flowyear-1][i]]==true){
-                document.getElementById('result').innerHTML += "<p style='color:  Yellow;'>"+myArray[twoDimArray[flowyear-1][i]]+twoDimArray[flowyear-1][i]+"</p>";
+                document.getElementById('subconscious').innerHTML += "<p style='color:Yellow;font-size: 100%;'>"+myArray[twoDimArray[flowyear-1][i]]+twoDimArray[flowyear-1][i]+"</p>";
                 element[attributes[twoDimArray[flowyear-1][i]]]++;
                 element[4]++;
             } 
         }
-        document.getElementById('result').innerHTML += "<p>無意識:</p>";
+        document.getElementById('noconscious').innerHTML = "無意識:";
         for(let i=0;i<twoDimArray[flowyear-1].length;i++){
             if(booleanArray[twoDimArray[flowyear-1][i]]==false){
-                document.getElementById('result').innerHTML += "<p style='color:  Yellow;'>"+myArray[twoDimArray[flowyear-1][i]]+twoDimArray[flowyear-1][i]+"</p>";
+                document.getElementById('noconscious').innerHTML += "<p style='color:Yellow;font-size: 100%;'>"+myArray[twoDimArray[flowyear-1][i]]+twoDimArray[flowyear-1][i]+"</p>";
             } 
         }
         var num4 = parseInt(document.getElementById('hour').value);
@@ -293,11 +373,15 @@
         plant[10] = (plant[0] - num1+ 2200)%22;
         plant[11] = (plant[0] + num5)%22;
         plant[12] = (plant[0] - num5 + 66 )%22;
+        
         document.getElementById('result').innerHTML += "<br>";
-        for(let i=0;i<plant.length;i++){
+        for (var i = 0; i < 13; i++) {
+            var elementId = i.toString(); 
             if(!isNaN(plant[i])){
-                document.getElementById('result').innerHTML += "<p style='display:inline-block;'>"+plant_name[i]+": "+"</p>";
-                document.getElementById('result').innerHTML += "<p style='color: Yellow; display:inline-block;'>"+myArray[plant[i]] + plant[i] +"</p><br>";
+                document.getElementById(elementId).innerHTML = "<p style='margin: 0;'>"+plant_name[i]+": "+"</p>";
+                document.getElementById(elementId).innerHTML += "<p style='color: Yellow; margin: 0;'>"+myArray[plant[i]] + plant[i] +"</p>";
+            }else {
+                document.getElementById(elementId).innerHTML = "";
             }
         }
         document.getElementById('result').innerHTML += "<br>";
@@ -306,6 +390,8 @@
         document.getElementById('fire').innerHTML ="火型氣質"+"<p style='color: Yellow;'>"+(element[2]*100/element[4]).toFixed(1)+'%'+"</p>";
         document.getElementById('dirt').innerHTML ="土型氣質"+"<p style='color: Yellow;'>"+(element[3]*100/element[4]).toFixed(1)+'%'+"</p>";
         document.querySelector('.box').style.display = 'flex';
+        document.querySelector('.box1').style.display = 'grid';
+        document.querySelector('.box2').style.display = 'flex';
         document.getElementById('flowyear').innerHTML = "<br><p>流年數: </p>" +
             "<p style='display:inline-block;'>"+(currentYear-1)+"/"+num2+"/"+num3+"~"+currentYear+"/"+temp2+"/"+temp3+"  </p>"+
             "<p style='color: Yellow; display:inline-block;'>"+myArray[god[6]] + god[6] + "</p><br>"+ 
